@@ -5,3 +5,6 @@ description = "A lightweight Python library for searching and downloading podcas
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = []
+
+[project.scripts]
+lightcast = "lightcast.__main__:main"
