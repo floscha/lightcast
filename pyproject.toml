@@ -3,8 +3,12 @@ name = "lightcast"
 version = "1.0.0"
 description = "A lightweight Python library for searching and downloading podcasts with zero dependencies."
 readme = "README.md"
+authors = [{ name = "Florian Schäfer", email = "florian.joh.schaefer@gmail.com" }]
 requires-python = ">=3.10"
 dependencies = []
 
 [project.scripts]
 lightcast = "lightcast.__main__:main"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
