@@ -7,6 +7,11 @@ authors = [{ name = "Florian Schäfer", email = "florian.joh.schaefer@gmail.com"
 requires-python = ">=3.10"
 dependencies = []
 
+[project.optional-dependencies]
+dev = [
+  "pytest",
+]
+
 [project.scripts]
 lightcast = "lightcast.__main__:main"
 
