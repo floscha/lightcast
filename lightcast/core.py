@@ -8,6 +8,10 @@ from urllib.request import urlopen, urlretrieve
 from xml.dom import minidom
 
 
+def download_episode(audio_url: str, file_path: str) -> None:
+    urlretrieve(audio_url, file_path)
+
+
 class Episode:
     """A single podcast episode."""
 
@@ -47,8 +51,8 @@ class Episode:
             int(xml_item.getElementsByTagName("itunes:duration")[0].firstChild.nodeValue.strip("\n")),
         )
 
-    def download(self, file_name: Optional[str] = None) -> None:
-        urlretrieve(self.audio_url, file_name or f"{self.title}.mp3")
+    def download(self, file_path: Optional[str] = None) -> None:
+        download_episode(self.audio_url, file_path or f"{self.title}.mp3")
 
 
 class Podcast:

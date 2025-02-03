@@ -1,4 +1,4 @@
-from lightcast.core import search_podcasts
+from lightcast.core import download_episode, search_podcasts
 
 
-__all__ = ["search_podcasts"]
+__all__ = ["download_episode", "search_podcasts"]
