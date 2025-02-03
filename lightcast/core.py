@@ -25,6 +25,12 @@ class Episode:
         self.publication_date = publication_date
         self.duration = duration
 
+    def __str__(self) -> str:
+        return self.title
+
+    def __repr__(self) -> str:
+        return str(self)
+
     @staticmethod
     def parse_publication_date(date_string: str) -> datetime:
         date_format = "%a, %d %b %Y %H:%M:%S %z"
@@ -52,6 +58,12 @@ class Podcast:
         self.id = id
         self.name = name
         self.feed_url = feed_url
+
+    def __str__(self) -> str:
+        return self.name
+
+    def __repr__(self) -> str:
+        return str(self)
 
     @staticmethod
     def from_dict(podcast_dict: dict[str, Any]) -> Podcast:

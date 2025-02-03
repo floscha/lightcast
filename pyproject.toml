@@ -1,6 +1,6 @@
 [project]
 name = "lightcast"
-version = "1.0.0"
+version = "1.1.0"
 description = "A lightweight Python library for searching and downloading podcasts with zero dependencies."
 readme = "README.md"
 authors = [{ name = "Florian Schäfer", email = "florian.joh.schaefer@gmail.com" }]
