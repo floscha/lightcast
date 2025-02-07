@@ -55,6 +55,13 @@ class Episode:
         download_episode(self.audio_url, file_path or f"{self.title}.mp3")
 
 
+def get_episodes_from_feed_url(feed_url: str) -> list[Episode]:
+    xml_str = urlopen(feed_url).read()
+    xmldoc = minidom.parseString(xml_str)
+    episode_items = xmldoc.getElementsByTagName("item")
+    return [Episode.from_xml(item) for item in episode_items]
+
+
 class Podcast:
     """A podcast consisting of various episodes."""
 
@@ -80,16 +87,7 @@ class Podcast:
     @property
     def episodes(self) -> list[Episode]:
         """Get a full list of episodes for the given podcast."""
-        try:
-            xml_str = urlopen(self.feed_url).read()
-        except IOError:
-            print("There was an error retrieving the data. Check your internet connection and try again.")
-
-        xmldoc = minidom.parseString(xml_str)
-        episode_items = xmldoc.getElementsByTagName("item")
-        episode_objects = [Episode.from_xml(item) for item in episode_items]
-
-        return episode_objects
+        return get_episodes_from_feed_url(self.feed_url)
 
 
 def search_podcasts(query: str) -> list[Podcast]:
