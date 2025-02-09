@@ -5,6 +5,7 @@ import sys
 from datetime import date, datetime
 from typing import Any, Optional
 from urllib.request import urlopen, urlretrieve
+from urllib.parse import quote
 from xml.dom import minidom
 
 
@@ -100,7 +101,8 @@ class Podcast:
 def search_podcasts(query: str) -> list[Podcast]:
     """Search for podcasts based on the given query string."""
     query = query.replace(" ", "+")
-    url = f"https://itunes.apple.com/search?term={query}&entity=podcast"
+    encoded_query = quote(query)  # Encode non-ASCII characters.
+    url = f"https://itunes.apple.com/search?term={encoded_query}&entity=podcast"
     try:
         response = urlopen(url)
     except IOError:

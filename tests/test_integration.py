@@ -13,3 +13,9 @@ def test_integration():
     assert "SCIM5670648609" in first_episode.audio_url
     assert first_episode.publication_date == datetime(2020, 12, 21, 5, 22, tzinfo=timezone.utc)
     assert first_episode.duration == 262  # 4m 22s
+
+
+def test_podcast_search_with_non_ascii_characters():
+    top_search_result = search_podcasts("Jagten på det evige liv")[0]
+
+    assert top_search_result.name == "Jagten på det evige liv"
