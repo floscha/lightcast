@@ -12,6 +12,20 @@ def download_episode(audio_url: str, file_path: str) -> None:
     urlretrieve(audio_url, file_path)
 
 
+def _parse_publication_date(date_string: str) -> datetime:
+    date_format = "%a, %d %b %Y %H:%M:%S %z"
+    return datetime.strptime(date_string, date_format)
+
+
+def _parse_duration(duration_string) -> int:
+    """Parse duration from string to number of seconds."""
+    if ":" in duration_string:
+        h, m, s = map(int, duration_string.split(":"))
+        return h * 3600 + m * 60 + s
+    else:
+        return int(duration_string)
+
+
 class Episode:
     """A single podcast episode."""
 
@@ -36,19 +50,12 @@ class Episode:
         return str(self)
 
     @staticmethod
-    def parse_publication_date(date_string: str) -> datetime:
-        date_format = "%a, %d %b %Y %H:%M:%S %z"
-        return datetime.strptime(date_string, date_format)
-
-    @staticmethod
     def from_xml(xml_item: minidom.Element) -> Episode:
         return Episode(
             xml_item.getElementsByTagName("title")[0].firstChild.nodeValue.strip("\n"),
             xml_item.getElementsByTagName("enclosure")[0].attributes["url"].value.strip("\n"),
-            Episode.parse_publication_date(
-                xml_item.getElementsByTagName("pubDate")[0].firstChild.nodeValue.strip("\n")
-            ),
-            int(xml_item.getElementsByTagName("itunes:duration")[0].firstChild.nodeValue.strip("\n")),
+            _parse_publication_date(xml_item.getElementsByTagName("pubDate")[0].firstChild.nodeValue.strip("\n")),
+            _parse_duration(xml_item.getElementsByTagName("itunes:duration")[0].firstChild.nodeValue.strip("\n")),
         )
 
     def download(self, file_path: Optional[str] = None) -> None:
